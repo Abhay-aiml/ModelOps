@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: modelops-api
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: modelops-api
+
+  template:
+    metadata:
+      labels:
+        app: modelops-api
+
+    spec:
+      containers:
+        - name: modelops-api
+          image: modelops-modelops-api:latest
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8000
+
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 20
+
+          volumeMounts:
+            - name: mlflow-db
+              mountPath: /app/mlflow.db
+            - name: mlruns
+              mountPath: /app/mlruns
+            - name: artifacts
+              mountPath: /app/artifacts
+            - name: prediction-logs
+              mountPath: /app/monitoring/prediction_logs
+            - name: monitoring-reports
+              mountPath: /app/monitoring/reports
+            - name: reference-data
+              mountPath: /app/monitoring/reference_data
+
+      volumes:
+        - name: mlflow-db
+          hostPath:
+            path: /host-modelops/mlflow.db
+            type: File
+        - name: mlruns
+          hostPath:
+            path: /host-modelops/mlruns
+            type: Directory
+        - name: artifacts
+          hostPath:
+            path: /host-modelops/artifacts
+            type: Directory
+        - name: prediction-logs
+          hostPath:
+            path: /host-modelops/monitoring/prediction_logs
+            type: Directory
+        - name: monitoring-reports
+          hostPath:
+            path: /host-modelops/monitoring/reports
+            type: Directory
+        - name: reference-data
+          hostPath:
+            path: /host-modelops/monitoring/reference_data
+            type: Directory
