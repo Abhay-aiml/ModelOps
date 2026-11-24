@@ -1,10 +1,14 @@
-# ModelOps 2.0
+﻿# ModelOps 2.0
 
 ### A Local-First MLOps Platform for Machine Learning Lifecycle Management
 
 ModelOps is a hands-on MLOps platform designed to manage the machine learning lifecycle, from data validation and model training to experiment tracking, model versioning, deployment, monitoring, and rollback.
 
 The project demonstrates how machine learning models can be managed and deployed using open-source tools and a local development environment.
+
+## Architecture
+
+![ModelOps Architecture](docs/architecture.png)
 
 ## Key Features
 
@@ -97,45 +101,45 @@ The project demonstrates how machine learning models can be managed and deployed
 
 ```text
 ModelOps/
-│
-├── backend/
-│   └── main.py
-│
-├── ml_pipeline/
-│   ├── data_validation/
-│   ├── preprocessing/
-│   ├── training/
-│   └── evaluation/
-│
-├── drift_detection/
-│   ├── detect_drift.py
-│   └── run_monitoring.py
-│
-├── monitoring/
-│   ├── monitoring_service.py
-│   ├── prediction_analytics.py
-│   ├── performance_monitor.py
-│   ├── reference_data/
-│   ├── prediction_logs/
-│   └── reports/
-│
-├── retraining/
-│
-├── infrastructure/
-│   ├── docker/
-│   └── kubernetes/
-│
-├── tests/
-│
-├── .github/
-│   └── workflows/
-│       ├── ci.yml
-│       └── cd.yml
-│
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-└── README.md
+â”‚
+â”œâ”€â”€ backend/
+â”‚   â””â”€â”€ main.py
+â”‚
+â”œâ”€â”€ ml_pipeline/
+â”‚   â”œâ”€â”€ data_validation/
+â”‚   â”œâ”€â”€ preprocessing/
+â”‚   â”œâ”€â”€ training/
+â”‚   â””â”€â”€ evaluation/
+â”‚
+â”œâ”€â”€ drift_detection/
+â”‚   â”œâ”€â”€ detect_drift.py
+â”‚   â””â”€â”€ run_monitoring.py
+â”‚
+â”œâ”€â”€ monitoring/
+â”‚   â”œâ”€â”€ monitoring_service.py
+â”‚   â”œâ”€â”€ prediction_analytics.py
+â”‚   â”œâ”€â”€ performance_monitor.py
+â”‚   â”œâ”€â”€ reference_data/
+â”‚   â”œâ”€â”€ prediction_logs/
+â”‚   â””â”€â”€ reports/
+â”‚
+â”œâ”€â”€ retraining/
+â”‚
+â”œâ”€â”€ infrastructure/
+â”‚   â”œâ”€â”€ docker/
+â”‚   â””â”€â”€ kubernetes/
+â”‚
+â”œâ”€â”€ tests/
+â”‚
+â”œâ”€â”€ .github/
+â”‚   â””â”€â”€ workflows/
+â”‚       â”œâ”€â”€ ci.yml
+â”‚       â””â”€â”€ cd.yml
+â”‚
+â”œâ”€â”€ Dockerfile
+â”œâ”€â”€ docker-compose.yml
+â”œâ”€â”€ requirements.txt
+â””â”€â”€ README.md
 ```
 
 ## Getting Started
