@@ -8,7 +8,64 @@ on:
     branches:
       - main
 
+jobs:name: ModelOps Continuous Deployment
+
+on:
+  workflow_run:
+    workflows: ["ModelOps CI Pipeline"]
+    types:
+      - completed
+    branches:
+      - main
+
 jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository }}
+
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+      - name: Checkout successful CI commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Configure environment
+        shell: powershell
+        run: |
+          $env:Path += ";C:\minikube"
+          "C:\minikube" | Out-File -FilePath $env:GITHUB_PATH -Append
+          docker --version
+          minikube version
+          kubectl version --client
+
+      - name: Build Docker image
+        shell: powershell
+        run: |
+          docker build -t modelops-modelops-api:latest .
+
+      - name: Load image into Minikube
+        shell: powershell
+        run: |
+          minikube image load modelops-modelops-api:latest
+
+      - name: Apply Kubernetes configuration
+        shell: powershell
+        run: |
+          kubectl apply -f infrastructure/kubernetes/deployment.yaml
+          kubectl apply -f infrastructure/kubernetes/service.yaml
+
+      - name: Restart deployment
+        shell: powershell
+        run: |
+          kubectl rollout restart deployment/modelops-api
+          kubectl rollout status deployment/modelops-api --timeout=180s
+
+      - name: Verify deployment
+        shell: powershell
+        run: |
+          kubectl get pods
+          kubectl get services
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
