@@ -1,0 +1,24 @@
+services:
+  modelops-api:
+    build: .
+    container_name: modelops-api
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      # MLflow database
+      - ./mlflow.db:/app/mlflow.db
+
+      # MLflow experiment and model artifacts
+      - ./mlruns:/app/mlruns
+
+      # Trained model artifacts
+      - ./artifacts:/app/artifacts
+
+      # Monitoring data
+      - ./monitoring/prediction_logs:/app/monitoring/prediction_logs
+      - ./monitoring/reports:/app/monitoring/reports
+      - ./monitoring/reference_data:/app/monitoring/reference_data
+
+    restart: unless-stopped

@@ -1,0 +1,42 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# IDE settings
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+# MLflow local tracking database and experiments
+mlflow.db
+mlruns/
+
+# Generated model artifacts
+artifacts/
+
+# Runtime prediction logs
+monitoring/prediction_logs/*.jsonl
+
+# Generated monitoring reports
+monitoring/reports/*.json
